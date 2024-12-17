@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "node-cli": "./index.js"
+    "ds-node-cli": "./index.js"
   },
   "type": "module",
   "keywords": [],

@@ -5,10 +5,10 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 import ora from "ora";
 import figlet from "figlet";
-import { compressFile, decompressFile } from "./compressor.js";
-import { convertCase } from "./case_conversion.js";
-import { isPalindrome } from "./isPalindrome.js";
-import { wordCount } from "./countWords.js";
+import { compressFile, decompressFile } from "./utils/compressor.js";
+import { convertCase } from "./utils/case_conversion.js";
+import { isPalindrome } from "./utils/isPalindrome.js";
+import { wordCount } from "./utils/countWords.js";
 
 console.log();
 console.log(chalk.cyanBright("Welcome to"));
@@ -32,7 +32,6 @@ program
   )
   .version("1.0.0");
 
-  
 program.action(() => {
   inquirer
     .prompt([
@@ -43,9 +42,9 @@ program.action(() => {
       },
     ])
     .then((answer) => {
-      const userName=answer.name;
-      console.log(chalk.italic.magenta(`Hello, ${userName}! 🙋🏻‍♂️`));
-      
+      const userName = answer.name;
+      console.log(chalk.italic.magentaBright(`Hello, ${userName}! 🙋🏻‍♂️`));
+
       function menu() {
         console.log();
         inquirer
@@ -67,7 +66,6 @@ program.action(() => {
           ])
           .then(async (answers) => {
             switch (answers.task) {
-
               case "Compress a file":
                 const compressAnswers = await inquirer.prompt([
                   {
@@ -79,12 +77,16 @@ program.action(() => {
                 let spinner = ora(`Comporessing the file...`).start();
                 if (compressFile(compressAnswers.input))
                   setTimeout(() => {
-                    spinner.succeed(chalk.green("Your file was compressed successfully!"));
+                    spinner.succeed(
+                      chalk.green("Your file was compressed successfully!")
+                    );
                   }, 2000);
                 else {
-                  spinner.fail(console.log(
-                    chalk.red("Error compressing file! Please try again.")
-                  ));
+                  spinner.fail(
+                    console.log(
+                      chalk.red("Error compressing file! Please try again.")
+                    )
+                  );
                 }
                 break;
 
@@ -156,11 +158,11 @@ program.action(() => {
                 console.log(
                   isPalindrome(palindromeAnswer.text)
                     ? chalk.greenBright(
-                      `'${palindromeAnswer.text}' is a palindrome!`
-                    )
+                        `'${palindromeAnswer.text}' is a palindrome!`
+                      )
                     : chalk.redBright(
-                      `'${palindromeAnswer.text}' is not a palindrome!`
-                    )
+                        `'${palindromeAnswer.text}' is not a palindrome!`
+                      )
                 );
                 break;
               // case 'Get a random joke':
@@ -168,25 +170,26 @@ program.action(() => {
               //   break;
 
               case "Exit":
-                inquirer.prompt([
-                  {
-                    type: "confirm",
-                    name: "exit",
-                    message: "Are you sure you want to exit?",
-                  },
-                ]).then((answer) => {
-                  if (answer.exit) {
-                    console.log(chalk.magenta(`Goodbye! ${userName} 🙋🏻‍♂️`));
-                    process.exit(0);
-                  }
-                  menu();
-                }
-                );
+                inquirer
+                  .prompt([
+                    {
+                      type: "confirm",
+                      name: "exit",
+                      message: "Are you sure you want to exit?",
+                    },
+                  ])
+                  .then((answer) => {
+                    if (answer.exit) {
+                      console.log(chalk.magenta(`Goodbye! ${userName} 🙋🏻‍♂️`));
+                      process.exit(0);
+                    }
+                    menu();
+                  });
             }
           });
       }
       menu();
-      });
+    });
 });
 
 program.parse(process.argv);
