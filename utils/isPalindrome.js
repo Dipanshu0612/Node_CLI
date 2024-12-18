@@ -1,4 +1,5 @@
 const isPalindrome = (str) => {
+  str = str.toLowerCase();
   let left = 0;
   let right = str.length - 1;
 

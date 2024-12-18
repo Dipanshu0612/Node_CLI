@@ -90,6 +90,7 @@ program.action(() => {
                     )
                   );
                 }
+                break;
 
               case "Decompress a file":
                 const decompressAnswers = await inquirer.prompt([
@@ -105,7 +106,7 @@ program.action(() => {
                     spinner2.succeed(
                       chalk.green("Your file was decompressed successfully!")
                     );
-                menu();
+                    menu();
                   }, 2000);
                 else
                   spinner2.fail(
@@ -113,6 +114,7 @@ program.action(() => {
                       chalk.red("Error decompressing file! Please try again.")
                     )
                   );
+                break;
 
               case "Convert case of text":
                 const caseAnswer = await inquirer.prompt([
@@ -136,6 +138,7 @@ program.action(() => {
                   )
                 );
                 menu();
+                break;
 
               case "Count words in a text":
                 const wordCountAnswer = await inquirer.prompt([
@@ -147,6 +150,7 @@ program.action(() => {
                 ]);
                 console.log(`Word count: ${wordCount(wordCountAnswer.text)}`);
                 menu();
+                break;
 
               case "Check if text is a palindrome":
                 const palindromeAnswer = await inquirer.prompt([
@@ -159,19 +163,21 @@ program.action(() => {
                 console.log(
                   isPalindrome(palindromeAnswer.text)
                     ? chalk.greenBright(
-                        `'${palindromeAnswer.text}' is a palindrome!`
-                      )
+                      `'${palindromeAnswer.text}' is a palindrome!`
+                    )
                     : chalk.redBright(
-                        `'${palindromeAnswer.text}' is not a palindrome!`
-                      )
+                      `'${palindromeAnswer.text}' is not a palindrome!`
+                    )
                 );
                 menu();
+                break;
               
               case 'Get a Random Joke':
                 const spinner3 = ora("Getting a funny joke for you...😂").start();
                 const res = await fetchJoke();
                 spinner3.succeed(chalk.italic.yellow(res));
                 menu();
+                break;
 
               case "Exit":
                 inquirer
