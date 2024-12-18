@@ -9,7 +9,7 @@ import { compressFile, decompressFile } from "./utils/compressor.js";
 import { convertCase } from "./utils/case_conversion.js";
 import { isPalindrome } from "./utils/isPalindrome.js";
 import { wordCount } from "./utils/countWords.js";
-import { fetchJoke } from "./utils/fetchJoke.js"
+import { fetchJoke } from "./utils/fetchJoke.js";
 
 console.log();
 console.log(chalk.cyanBright("Welcome to"));
@@ -82,13 +82,8 @@ program.action(() => {
                     );
                     menu();
                   }, 2000);
-                }
-                else {
-                  spinner.fail(
-                    console.log(
-                      chalk.red("Error compressing file! Please try again.")
-                    )
-                  );
+                } else {
+                  spinner.fail("Error compressing file! Please try again.");
                 }
                 break;
 
@@ -110,9 +105,7 @@ program.action(() => {
                   }, 2000);
                 else
                   spinner2.fail(
-                    console.log(
-                      chalk.red("Error decompressing file! Please try again.")
-                    )
+                    chalk.red("Error decompressing file! Please try again.")
                   );
                 break;
 
@@ -163,17 +156,19 @@ program.action(() => {
                 console.log(
                   isPalindrome(palindromeAnswer.text)
                     ? chalk.greenBright(
-                      `'${palindromeAnswer.text}' is a palindrome!`
-                    )
+                        `'${palindromeAnswer.text}' is a palindrome!`
+                      )
                     : chalk.redBright(
-                      `'${palindromeAnswer.text}' is not a palindrome!`
-                    )
+                        `'${palindromeAnswer.text}' is not a palindrome!`
+                      )
                 );
                 menu();
                 break;
-              
-              case 'Get a Random Joke':
-                const spinner3 = ora("Getting a funny joke for you...😂").start();
+
+              case "Get a Random Joke":
+                const spinner3 = ora(
+                  "Getting a funny joke for you...😂"
+                ).start();
                 const res = await fetchJoke();
                 spinner3.succeed(chalk.italic.yellow(res));
                 menu();
