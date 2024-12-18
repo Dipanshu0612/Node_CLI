@@ -9,6 +9,7 @@ import { compressFile, decompressFile } from "./utils/compressor.js";
 import { convertCase } from "./utils/case_conversion.js";
 import { isPalindrome } from "./utils/isPalindrome.js";
 import { wordCount } from "./utils/countWords.js";
+import { fetchJoke } from "./utils/fetchJoke.js"
 
 console.log();
 console.log(chalk.cyanBright("Welcome to"));
@@ -23,7 +24,6 @@ console.log(
   )
 );
 console.log();
-// dotenv.config();
 
 program
   .name("D's Node CLI")
@@ -59,7 +59,7 @@ program.action(() => {
                 "Convert case of text",
                 "Count words in a text",
                 "Check if text is a palindrome",
-                "Get a random joke",
+                "Get a Random Joke",
                 "Exit",
               ],
             },
@@ -75,12 +75,14 @@ program.action(() => {
                   },
                 ]);
                 let spinner = ora(`Comporessing the file...`).start();
-                if (compressFile(compressAnswers.input))
+                if (compressFile(compressAnswers.input)) {
                   setTimeout(() => {
                     spinner.succeed(
                       chalk.green("Your file was compressed successfully!")
                     );
+                    menu();
                   }, 2000);
+                }
                 else {
                   spinner.fail(
                     console.log(
@@ -88,7 +90,6 @@ program.action(() => {
                     )
                   );
                 }
-                break;
 
               case "Decompress a file":
                 const decompressAnswers = await inquirer.prompt([
@@ -104,6 +105,7 @@ program.action(() => {
                     spinner2.succeed(
                       chalk.green("Your file was decompressed successfully!")
                     );
+                menu();
                   }, 2000);
                 else
                   spinner2.fail(
@@ -111,7 +113,6 @@ program.action(() => {
                       chalk.red("Error decompressing file! Please try again.")
                     )
                   );
-                break;
 
               case "Convert case of text":
                 const caseAnswer = await inquirer.prompt([
@@ -134,7 +135,7 @@ program.action(() => {
                     )}`
                   )
                 );
-                break;
+                menu();
 
               case "Count words in a text":
                 const wordCountAnswer = await inquirer.prompt([
@@ -145,7 +146,7 @@ program.action(() => {
                   },
                 ]);
                 console.log(`Word count: ${wordCount(wordCountAnswer.text)}`);
-                break;
+                menu();
 
               case "Check if text is a palindrome":
                 const palindromeAnswer = await inquirer.prompt([
@@ -164,10 +165,13 @@ program.action(() => {
                         `'${palindromeAnswer.text}' is not a palindrome!`
                       )
                 );
-                break;
-              // case 'Get a random joke':
-              //   await fetchJoke();
-              //   break;
+                menu();
+              
+              case 'Get a Random Joke':
+                const spinner3 = ora("Getting a funny joke for you...😂").start();
+                const res = await fetchJoke();
+                spinner3.succeed(chalk.italic.yellow(res));
+                menu();
 
               case "Exit":
                 inquirer
